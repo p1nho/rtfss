@@ -1,0 +1,37 @@
+cblock@smpp main(:: I16 sqr_out,I16 lp_out){
+	//Generate square wave
+	pulse sq_p 880Hz;
+	I16@smpp sqr_smpp=sqr_wave;
+	sqr_out = sqr_wave;
+	I16@sq_p sqr_wave = not (sqr_wave'-1); //Square wave of 440Hz
+	sqr_wave'-1 = I16(0x7FFF);
+
+	//Low pass 0.2 IIR Filter
+	I16.2@smpp lowpass = I16.2((lowpass'-1)>>1+(sqr_smpp+(sqr_smpp'-1))>>2);
+	lp_out=I16(lowpass);
+}
+
+//////////////////////////////////////////////////////////////////////
+//Cant compile in this stage
+
+/*
+cblock@smpp lp_filter(: I16 smp_in : I16 lp_out){
+	//Low pass 0.2 Normalized Frequency IIR Filter
+	I16.2@smpp lowpass = I16.2((lowpass'-1)>>1+(smp_in+(smp_in'-1))>>2);
+	lp_out=I16(lowpass);
+}
+
+cblock@frqp square(:: I16 sqr_wave){
+	//Square wave oscillator
+	//Output frequency = frqp pulse freq / 2
+	sqr_wave = not (sqr_wave'-1);
+	sqr_wave'-1 = I16(0x7FFF);
+}
+
+cblock@smpp main(:: I16 smp_out){
+	pulse square_p 4000Hz; //Used to generate the 2kHz square wave
+	smp_out=lp_filter@smpp(: square@square_p(:)); 
+}
+*/
+
+//////////////////////////////////////////////////////////////////////

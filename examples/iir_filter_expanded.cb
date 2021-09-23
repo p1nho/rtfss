@@ -1,0 +1,7 @@
+cblock@smpp main(: I16 smp_in : I16 lp_out){
+	lp_out=I16(lowpass);
+	I16.2@smpp lowpass;
+	lowpass = lowpass'-(1+1);
+	lowpass = I16.2(smp_in+(smp_in'-1)>>2);
+	lowpass += (lowpass'-1)>>1;
+}

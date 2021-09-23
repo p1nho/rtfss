@@ -1,0 +1,5 @@
+cblock@smpp main(: I16 smp_in : I16 lp_out){
+	//Low pass 0.2 Normalized Frequency IIR Filter
+	I16.2@smpp lowpass = I16.2((lowpass'-1)>>1+(smp_in+(smp_in'-1))>>2);
+	lp_out=I16(lowpass);
+}

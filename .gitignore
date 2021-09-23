@@ -1,0 +1,5 @@
+/bin/
+/build/
+/doc/
+/compile_commands.json
+/cmake/antlr4.jar
