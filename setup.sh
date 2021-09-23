@@ -1,4 +1,4 @@
-#!/sbin/bash
+#!/bin/sh
 
 #Get script dir
 DIR=$(dirname "$0" )
